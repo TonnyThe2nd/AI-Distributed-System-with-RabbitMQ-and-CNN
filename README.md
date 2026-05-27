@@ -1,67 +1,176 @@
-🚀 Distributed AI Image Processing System
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Distributed AI Image Processing System</title>
+</head>
 
-Sistema distribuído para processamento e classificação de imagens utilizando CNN (Convolutional Neural Network), FastAPI, RabbitMQ e Workers assíncronos em Python, orquestrado via Docker Compose.
+<body>
 
-📌 Visão Geral
+  <h1>🚀 Distributed AI Image Processing System</h1>
 
-Este projeto simula uma arquitetura moderna de sistemas distribuídos aplicada a IA.
-As imagens são enviadas via API, enfileiradas no RabbitMQ e processadas por workers especializados que executam inferência usando uma rede neural convolucional (CNN).
+  <p>
+    Sistema distribuído para processamento e classificação de imagens utilizando
+    <strong>CNN (Convolutional Neural Network)</strong>, <strong>FastAPI</strong>,
+    <strong>RabbitMQ</strong> e <strong>Workers assíncronos em Python</strong>,
+    totalmente orquestrado com <strong>Docker Compose</strong>.
+  </p>
 
-🧠 Arquitetura
+  <hr>
 
-O sistema é dividido em três principais componentes:
+  <h2>📌 Visão Geral</h2>
 
-API (FastAPI) → Recebe requisições e envia tarefas para a fila
-RabbitMQ → Broker de mensagens para comunicação assíncrona
-Worker (Python) → Consome mensagens e executa a CNN
-CNN Module → Modelo de deep learning responsável pela classificação
-🔄 Fluxo do sistema
-Usuário envia imagem para a API
-API publica mensagem no RabbitMQ
-Worker consome a fila
-CNN processa a imagem
-Resultado é retornado/logado
-🧱 Tecnologias utilizadas
-Python 3.11
-FastAPI
-Uvicorn
-TensorFlow / Keras
-OpenCV
-RabbitMQ
-Pika
-Docker & Docker Compose
-NumPy
+  <p>
+    Este projeto simula uma arquitetura real de sistemas distribuídos aplicada à Inteligência Artificial.
+    As imagens são enviadas via API, colocadas em uma fila no RabbitMQ e processadas por workers independentes
+    que executam inferência utilizando uma rede neural convolucional (CNN).
+  </p>
 
-⚙️ Como executar o projeto
-🔧 Pré-requisitos
-Docker
-Docker Compose
-▶️ Executando
+  <hr>
 
-No diretório raiz do projeto:
+  <h2>🧠 Arquitetura do Sistema</h2>
 
+  <ul>
+    <li><strong>API (FastAPI)</strong> → Recebe requisições e publica mensagens na fila</li>
+    <li><strong>RabbitMQ</strong> → Broker de mensagens assíncronas</li>
+    <li><strong>Worker</strong> → Consome mensagens e executa a CNN</li>
+    <li><strong>CNN Module</strong> → Modelo de deep learning responsável pela classificação</li>
+  </ul>
+
+  <h3>🔄 Fluxo de execução</h3>
+
+  <ol>
+    <li>Usuário envia imagem para a API</li>
+    <li>API publica a tarefa no RabbitMQ</li>
+    <li>Worker consome a mensagem</li>
+    <li>CNN processa a imagem</li>
+    <li>Resultado é retornado ou registrado</li>
+  </ol>
+
+  <hr>
+
+  <h2>⚙️ Tecnologias utilizadas</h2>
+
+  <ul>
+    <li>Python 3.11</li>
+    <li>FastAPI</li>
+    <li>Uvicorn</li>
+    <li>TensorFlow / Keras</li>
+    <li>OpenCV</li>
+    <li>RabbitMQ</li>
+    <li>Pika</li>
+    <li>Docker & Docker Compose</li>
+    <li>NumPy</li>
+  </ul>
+
+  <hr>
+
+  <h2>📁 Estrutura do Projeto</h2>
+
+  <pre>
+Ia Distribuida/
+│
+├── api/
+├── worker/
+├── cnn/
+├── docker-compose.yml
+└── README.md
+  </pre>
+
+  <hr>
+
+  <h2>▶️ Como executar o projeto</h2>
+
+  <h3>🔧 Pré-requisitos</h3>
+  <ul>
+    <li>Docker</li>
+    <li>Docker Compose</li>
+  </ul>
+
+  <h3>🚀 Execução</h3>
+
+  <pre>
 docker compose up --build
-🌐 Acessos
-API: http://localhost:8000
-RabbitMQ Panel: http://localhost:15672
-usuário: admin
-senha: admin
-🧪 Exemplo de uso
+  </pre>
 
-Exemplo de requisição para a API:
+  <hr>
 
+  <h2>🌐 Acessos</h2>
+
+  <ul>
+    <li>API → http://localhost:8000</li>
+    <li>RabbitMQ Management → http://localhost:15672</li>
+    <li>Usuário: admin</li>
+    <li>Senha: admin</li>
+  </ul>
+
+  <hr>
+
+  <h2>🧪 Exemplo de requisição</h2>
+
+  <pre>
 POST /predict
 Content-Type: application/json
 
 {
   "image": "base64_string_here"
 }
-🧠 Conceitos aplicados
-Sistemas Distribuídos
-Mensageria assíncrona (RabbitMQ)
-Microservices
-Deep Learning com CNN
-Processamento de imagens
-Containerização com Docker
-Arquitetura escalável
-📈 Possíveis melhorias
+  </pre>
+
+  <hr>
+
+  <h2>⚠️ IMPORTANTE (Cluster / Workers)</h2>
+
+  <p>
+    Para que o sistema funcione corretamente como um <strong>cluster distribuído</strong>,
+    é necessário executar o Docker Compose com <strong>mais de um worker ativo</strong>.
+  </p>
+
+  <p>
+    Isso garante o paralelismo no consumo da fila do RabbitMQ e simula um ambiente real de escalabilidade horizontal.
+  </p>
+
+  <p>
+    Exemplo recomendado:
+  </p>
+
+  <pre>
+docker compose up --scale worker=3
+  </pre>
+
+  <hr>
+
+  <h2>🧠 Conceitos aplicados</h2>
+
+  <ul>
+    <li>Sistemas Distribuídos</li>
+    <li>Mensageria com RabbitMQ</li>
+    <li>Arquitetura de Microservices</li>
+    <li>Deep Learning com CNN</li>
+    <li>Processamento de imagens</li>
+    <li>Dockerização de aplicações</li>
+    <li>Escalabilidade horizontal</li>
+  </ul>
+
+  <hr>
+
+  <h2>📈 Melhorias futuras</h2>
+
+  <ul>
+    <li>Persistência em banco de dados</li>
+    <li>WebSocket para retorno em tempo real</li>
+    <li>Deploy em Kubernetes</li>
+    <li>Monitoramento com Prometheus + Grafana</li>
+    <li>Load balancing entre workers</li>
+  </ul>
+
+  <hr>
+
+  <h2>👨‍💻 Autor</h2>
+
+  <p>
+    Projeto desenvolvido para estudo de Sistemas Distribuídos e Inteligência Artificial.
+  </p>
+
+</body>
+</html>
