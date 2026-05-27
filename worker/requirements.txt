@@ -1,0 +1,5 @@
+pika
+tensorflow
+numpy
+opencv-python-headless
+Pillow

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    # ADICIONADO: O Docker agora sabe como testar se o RabbitMQ está pronto
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    command: python worker/worker.py
+    # AJUSTADO: Espera o RabbitMQ estar totalmente saudável
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      PYTHONUNBUFFERED: "1"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      PYTHONPATH: /app
+      TF_CPP_MIN_LOG_LEVEL: "2" # Opcional: Oculta os avisos visuais de CPU do TensorFlow
+    volumes:
+      - .:/app
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    command: uvicorn api.api:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      TF_CPP_MIN_LOG_LEVEL: "2" # Opcional: Oculta os avisos visuais de CPU do TensorFlow
+    volumes:
+      - .:/app
