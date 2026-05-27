@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Distributed AI Image Processing System</title>
+  
 </head>
 
 <body>
@@ -62,22 +62,6 @@
     <li>Docker & Docker Compose</li>
     <li>NumPy</li>
   </ul>
-
-  <hr>
-
-  <h2>📁 Estrutura do Projeto</h2>
-
-  <pre>
-Ia Distribuida/
-│
-├── api/
-├── worker/
-├── cnn/
-├── docker-compose.yml
-└── README.md
-  </pre>
-
-  <hr>
 
   <h2>▶️ Como executar o projeto</h2>
 
@@ -165,12 +149,6 @@ docker compose up --scale worker=3
   </ul>
 
   <hr>
-
-  <h2>👨‍💻 Autor</h2>
-
-  <p>
-    Projeto desenvolvido para estudo de Sistemas Distribuídos e Inteligência Artificial.
-  </p>
 
 </body>
 </html>
