@@ -1,0 +1,97 @@
+<header>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</header>
+<div class="upload-container">
+    <mat-card class="upload-card" [class.dark-theme]="isDarkTheme">
+
+        <mat-card-header>
+            <mat-card-title>
+                <mat-icon>cloud_upload</mat-icon>
+                Upload de Arquivos
+                <button mat-icon-button class="theme-toggle" (click)="toggleTheme()" matTooltip="Alternar tema">
+                    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+                </button>
+            </mat-card-title>
+            <mat-card-subtitle>
+                Arraste e solte ou clique para selecionar
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <div class="drop-zone" [class.drag-over]="dragOver" [class.disabled]="uploading"
+                (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+                <input #fileInput type="file" multiple hidden (change)="onFileSelected($event)"
+                    [disabled]="uploading" />
+                <div class="drop-zone-content">
+                    <mat-icon class="upload-icon">backup</mat-icon>
+                    <p>Arraste seus arquivos aqui ou</p>
+                    <button mat-raised-button color="primary" (click)="fileInput.click()" [disabled]="uploading">
+                        <mat-icon>folder_open</mat-icon>
+                        Selecionar Arquivos
+                    </button>
+                    <p class="file-hint">Suporta qualquer formato. Máx. {{ '50' }}MB por arquivo.</p>
+                </div>
+            </div>
+
+            <div class="error-container" *ngIf="errors.length">
+                <mat-card class="error-card">
+                    <div *ngFor="let error of errors" class="error-message">
+                        <mat-icon color="warn">error</mat-icon>
+                        <span>{{ error }}</span>
+                    </div>
+                    <button mat-button color="warn" (click)="clearErrors()">Limpar avisos</button>
+                </mat-card>
+            </div>
+
+            <div class="file-list" *ngIf="selectedFiles.length > 0">
+                <h3>Arquivos selecionados ({{ selectedFiles.length }})</h3>
+                <div class="file-grid">
+                    <mat-card class="file-card" *ngFor="let file of selectedFiles; let i = index; trackBy: trackByFile">
+                        <div class="file-preview">
+                            <mat-icon>{{ getFileIcon(file) }}</mat-icon>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name" [matTooltip]="file.name">{{ file.name }}</div>
+                            <div class="file-size">{{ formatFileSize(file.size) }}</div>
+
+                            <div *ngIf="filePredictions[i]" class="prediction">
+                                <div class="prediction-item">
+                                    <span class="pred-class">{{ filePredictions[i].classe }}</span>
+                                    <span class="pred-confidence">{{ (filePredictions[i].confianca * 100).toFixed(1)
+                                        }}%</span>
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="uploadProgress[i] === 100 && !filePredictions[i]" class="prediction-warning">
+                                <mat-icon>warning</mat-icon> Sem classificação
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button mat-icon-button color="warn" (click)="removeFile(i)" [disabled]="uploading">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                        <mat-progress-bar *ngIf="uploadProgress[i] !== undefined" mode="determinate"
+                            [value]="uploadProgress[i]">
+                        </mat-progress-bar>
+                    </mat-card>
+                </div>
+            </div>
+
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-stroked-button color="warn" (click)="clearFiles()" [disabled]="uploading">
+                <mat-icon>delete_sweep</mat-icon>
+                Limpar
+            </button>
+            <button mat-raised-button color="accent" [disabled]="selectedFiles.length === 0 || uploading"
+                (click)="uploadFiles()">
+                <mat-icon>{{ uploading ? 'hourglass_empty' : 'send' }}</mat-icon>
+                {{ uploading ? 'Enviando...' : 'Enviar Arquivos' }}
+            </button>
+        </mat-card-actions>
+
+    </mat-card>
+</div>
