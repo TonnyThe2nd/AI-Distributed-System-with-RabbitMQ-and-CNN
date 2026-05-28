@@ -8,16 +8,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
-import {FileService} from "../services/file-service";
-import { PrefixNot } from '@angular/compiler';
+import { HttpEventType } from '@angular/common/http';
+import { FileService } from "../services/file-service";
 
 const MAX_FILE_SIZE_MB = 50;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
+
 interface PredictionResponse {
   classe: string;
   confianca: number;
 }
+
 @Component({
   selector: 'app-file-upload',
   imports: [
@@ -33,7 +37,6 @@ interface PredictionResponse {
   templateUrl: './file-upload.html',
   styleUrls: ['./file-upload.css']
 })
-
 export class FileUpload {
   dragOver = false;
   uploading = false;
@@ -41,24 +44,20 @@ export class FileUpload {
   isDarkTheme = false;
   selectedFiles: File[] = [];
   errors: string[] = [];
-  filePredictions: PredictionResponse[] = []; 
+  filePredictions: PredictionResponse[] = [];
   private uploadSubscriptions: { index: number; subscription: any }[] = [];
+
   constructor(private cdr: ChangeDetectorRef, private fileService: FileService) {}
 
-  getFileIcon(file: File): string {
-    const type = file.type;
-    const name = file.name.toLowerCase();
+  private isValidImage(file: File): boolean {
+    const isMimeValid = ALLOWED_IMAGE_TYPES.includes(file.type);
+    const fileExt = '.' + file.name.split('.').pop()?.toLowerCase();
+    const isExtValid = ALLOWED_EXTENSIONS.includes(fileExt);
+    return isMimeValid && isExtValid;
+  }
 
-    if (type.startsWith('image/')) return 'image';
-    if (type.startsWith('video/')) return 'movie';
-    if (type.startsWith('audio/')) return 'audiotrack';
-    if (type === 'application/pdf') return 'picture_as_pdf';
-    if (type.includes('word') || name.endsWith('.doc') || name.endsWith('.docx')) return 'description';
-    if (type.includes('spreadsheet') || name.endsWith('.xls') || name.endsWith('.xlsx')) return 'table_chart';
-    if (type.includes('presentation') || name.endsWith('.ppt') || name.endsWith('.pptx')) return 'slideshow';
-    if (type === 'text/plain') return 'article';
-    if (type === 'application/zip' || name.endsWith('.zip') || name.endsWith('.rar')) return 'folder_zip';
-    if (type === 'application/json') return 'data_object';
+  getFileIcon(file: File): string {
+    if (this.isValidImage(file)) return 'image';
     return 'insert_drive_file';
   }
 
@@ -175,7 +174,13 @@ export class FileUpload {
     for (const file of files) {
       if (file.size > MAX_FILE_SIZE_BYTES) {
         newErrors.push(`${file.name} excede o limite de ${MAX_FILE_SIZE_MB}MB.`);
-      } else if (!this.selectedFiles.some(existing => existing.name === file.name && existing.size === file.size)) {
+        continue;
+      }
+      if (!this.isValidImage(file)) {
+        newErrors.push(`${file.name} não é uma imagem válida. Apenas JPG, JPEG e PNG são aceitos.`);
+        continue;
+      }
+      if (!this.selectedFiles.some(existing => existing.name === file.name && existing.size === file.size)) {
         validFiles.push(file);
       } else {
         newErrors.push(`${file.name} já foi adicionado.`);
