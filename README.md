@@ -51,10 +51,11 @@
       <strong>📤 Upload de Múltiplos Arquivos</strong>
       <p>Seleção via clique ou drag-and-drop. Validação de tamanho (até 50MB por arquivo) e lista de arquivos com progresso individual.</p>
     </div>
-    
+    <div>
     <div class="feature-card">
       <strong>📊 Progresso & Predições</strong>
       <p>Barra de progresso para cada upload. Ao final, exibe a classe prevista e a confiança (percentual).</p>
+    </div>
     </div>
     <div class="feature-card">
       <strong>🌙 Tema Escuro/Claro</strong>
@@ -67,6 +68,7 @@
     <div class="feature-card">
       <strong>🧹 Limpeza de Lista</strong>
       <p>Botão "Limpar" remove todos os arquivos da fila e cancela uploads em andamento.</p>
+    </div>
     </div>
   </div>
 
