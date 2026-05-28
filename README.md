@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Distributed AI Image Processing System</title>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background: #f5f5f5; color: #333; }
-    .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-    h2 { color: #2980b9; margin-top: 30px; }
-    h3 { color: #16a085; }
-    pre { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; }
-    code { background: #ecf0f1; padding: 2px 5px; border-radius: 4px; font-family: monospace; }
-    ul, ol { margin-left: 20px; }
-    hr { margin: 30px 0; border: none; height: 1px; background: #ddd; }
-    .badge { display: inline-block; background: #3498db; color: white; padding: 3px 8px; border-radius: 20px; font-size: 0.8em; margin-right: 5px; }
-    .feature-grid { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0; }
-    .feature-card { background: #f9f9f9; border-left: 4px solid #3498db; padding: 15px; border-radius: 8px; flex: 1 1 250px; }
-    .feature-card mat-icon { font-size: 24px; color: #3498db; }
-    .tech-badge { background: #e0e7ff; color: #1e3a8a; padding: 5px 12px; border-radius: 20px; display: inline-block; margin: 4px; font-size: 0.9em; }
-    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #7f8c8d; }
-    @media (max-width: 600px) { .container { padding: 15px; } }
-  </style>
-</head>
+
 <body>
 <div class="container">
 
