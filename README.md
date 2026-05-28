@@ -51,10 +51,7 @@
       <strong>📤 Upload de Múltiplos Arquivos</strong>
       <p>Seleção via clique ou drag-and-drop. Validação de tamanho (até 50MB por arquivo) e lista de arquivos com progresso individual.</p>
     </div>
-    <div class="feature-card">
-      <strong>🖼️ Ícones Dinâmicos</strong>
-      <p>Ícone diferente para cada tipo de arquivo (imagem, PDF, vídeo, áudio, etc.) usando <code>Material Icons</code>.</p>
-    </div>
+    
     <div class="feature-card">
       <strong>📊 Progresso & Predições</strong>
       <p>Barra de progresso para cada upload. Ao final, exibe a classe prevista e a confiança (percentual).</p>
