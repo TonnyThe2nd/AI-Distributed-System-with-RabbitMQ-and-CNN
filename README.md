@@ -44,7 +44,7 @@
 
   <h2>🎨 Frontend Angular – Funcionalidades</h2>
   <p>
-    O frontend foi desenvolvido com <strong>Angular 21</strong> e <strong>Angular Material</strong>, oferecendo uma experiência rica e responsiva.
+    O frontend foi desenvolvido com <strong>Angular 20</strong> e <strong>Angular Material</strong>, oferecendo uma experiência rica e responsiva.
   </p>
   <div class="feature-grid">
     <div class="feature-card">
@@ -75,7 +75,7 @@
 
   <h3>🔧 Tecnologias do Frontend</h3>
   <div>
-    <span class="tech-badge">Angular 21</span>
+    <span class="tech-badge">Angular 20</span>
     <span class="tech-badge">Angular Material</span>
     <span class="tech-badge">RxJS</span>
     <span class="tech-badge">TypeScript</span>
