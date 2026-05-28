@@ -3,9 +3,9 @@ import pika
 import time
 from cnn.rede_neural import Cnn
 
-print("Iniciando worker...", flush=True)
+print("Iniciando worker", flush=True)
 
-# Ajuste o nome aqui caso tenha renomeado o arquivo para tirar o " (1)"
+
 cnn = Cnn('models/best_model (1).keras') 
 
 credentials = pika.PlainCredentials('admin', 'admin')
@@ -21,11 +21,11 @@ def callback(ch, method, properties, body):
     
     print(f" [x] Processando imagem: {image_path}", flush=True)
     
-    # Executa a inferência da rede neural
+    # executa a inferência da rede neural
     resultado = cnn.predict_image(image_path)
     print(f" [x] Resultado obtido: {resultado}", flush=True)
 
-    # SE A API PEDIU RESPOSTA (Padrão RPC)
+    # se a api pedir alguma resposta
     if properties.reply_to:
         ch.basic_publish(
             exchange='',
@@ -34,19 +34,19 @@ def callback(ch, method, properties, body):
             body=json.dumps({"resultado": resultado})
         )
     
-    # Confirma para o RabbitMQ que a mensagem foi processada
+    # confirma para o rabbit que a mensagem foi processada
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(
     queue='cnn_queue',
     on_message_callback=callback,
-    auto_ack=False # Importante para garantir que nenhuma imagem suma se o worker cair
+    auto_ack=False # importante para garantir que nenhuma imagem suma se o worker cair
 )
 
-print("Aguardando mensagens...")
+print("Aguardando mensagens")
 try:
     channel.start_consuming()
 except KeyboardInterrupt:
-    print("Parando worker...")
+    print("Parando worker")
     connection.close()
